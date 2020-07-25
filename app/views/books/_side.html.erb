@@ -1,0 +1,16 @@
+                 <h1>New book</h1>
+                   <%= form_for(book, url: books_path)do |f| %>
+                          <% if @book.errors.any? %>
+                          <%= @book.errors.count %>errors
+                                  <ul>
+                                  <% @book.errors.full_messages.each do |message| %>
+                                    <li><%= message %></li>
+                                  <% end %>
+                                  </ul>
+                                <% end %>
+                     <%= f.label :title %>
+                     <%= f.text_field :title, class: "form-control book_title"%>
+                     <%= f.label :opinion %>
+                     <%= f.text_area :body, class: "form-control book_body" %>
+                     <%= f.submit class: "btn btn-block btn-primary" %>
+                   <% end %>

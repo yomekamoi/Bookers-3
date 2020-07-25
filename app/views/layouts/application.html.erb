@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Bookers2</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+      <header>
+
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+
+          <div class="navbar-header">
+            <a class="navbar-brand col-md-4">Bookers</a>
+          </div>
+          <ul class="nav navbar-nav navbar-right">
+              <% if user_signed_in? %>
+                <li><%= link_to 'Home', user_path(current_user), class: "home glyphicon glyphicon-home" %></li>
+                <li><%= link_to 'Users', users_path, class: "users glyphicon glyphicon-user" %></li>
+                <li><%= link_to 'Books', books_path, class: "books glyphicon glyphicon-book" %></li>
+                <li><%= link_to "log out",destroy_user_session_path,method: :delete, class: "logout glyphicon glyphicon-log-out" %></li>
+                <% else %>
+                <li><%= link_to 'Home', root_path, class: "home glyphicon glyphicon-home" %></li>
+                <li><%= link_to 'About', home_about_path, class: "about glyphicon glyphicon-link" %></li>
+                <li><%= link_to "Sign up",new_user_registration_path, class: "sign_up glyphicon glyphicon-edit" %></li>
+                <li><%= link_to 'Log in', new_user_session_path, class: "sign_in glyphicon glyphicon-log-in" %></li>
+            <% end %>
+          </ul>
+      </div>
+    </nav>
+    <h3>Bookers</h3>
+  </header>
+         <% flash.each do |message_type, message| %>
+          <%= content_tag(:div, message, class: "alert alert-#{message_type}") %>
+          <% end %>
+
+          <!-- 検索機能 -->
+          <% if user_signed_in? %>
+          <%= form_tag search_path, :method => 'get' do %>
+            <%= text_field_tag 'search[content]' %>
+            <%= select_tag 'search[model]', options_for_select({ "User" => "user", "Book" => "book" }) %>
+            <%= select_tag 'search[method]', options_for_select({ "完全一致" => "perfect", "前方一致" => "forward", "後方一致" => "backward", "部分一致" => "partial" }) %>
+            <%= submit_tag '検索' %>
+            <% end %>
+          <% end %>
+          <!-- ここまで -->
+    <%= yield %>
+      <div class="row">
+        <div class="col-xs-3 col-xs-offset-9">
+          <p>CopyRight Infratop.inc</p>
+      </div>
+    </div>
+
+  </body>
+</html>

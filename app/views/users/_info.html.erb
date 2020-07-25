@@ -1,0 +1,32 @@
+    <h1>User Info</h1>
+      <div>
+        <%= attachment_image_tag user, :profile_image, :fill, 100, 100, format:'jpeg', class: "pull-left profile-img", fallback: "no_image.jpg" %>
+      </div>
+      <table class="table">
+        <tbody>
+          <tr>
+            <th>name</th>
+            <th><%= user.name %></th>
+         </tr>
+          <tr>
+            <th>introduction</th>
+            <th><%= user.introduction %></th>
+          </tr>
+                    <tr>
+            <th>フォローしている</th>
+            <th><%= link_to "#{user.followings.count} フォロー", followings_user_path(user) %></th>
+          </tr>
+                    <tr>
+            <th>フォローされている</th>
+            <th><%= link_to "#{user.followers.count} フォロー", followers_user_path(user) %></th>
+          </tr>
+        </tbody>
+      </table>
+
+      <% if user == current_user %>
+     <%= link_to '',edit_user_path(current_user.id),class: "btn btn-block btn-default glyphicon glyphicon-wrench edit_user_#{current_user.id}" %>
+     <% end %>
+
+
+
+

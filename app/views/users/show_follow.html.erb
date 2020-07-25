@@ -1,0 +1,34 @@
+<div class="container">
+    <h2>Followings</h2>
+    <p><%= @user.name %>がフォローしているユーザー</p>
+
+      <table class="table table-striped">
+           <thead>
+		      <tr>
+		        <th>image</th>
+		        <th>name</th>
+		        <th></th>
+		        <th></th>
+		      </tr>
+           </thead>
+
+           <% @user.followings.each do |user| %>
+           <tbody>
+            <tr>
+              <td>
+                 <div><%= attachment_image_tag user, :profile_image, :fill, 50, 50, format:'jpeg', class: "pull-left profile-img", fallback: "no_image.jpg" %></div>
+              </td>
+              <td>
+                <%= user.name %>
+              </td>
+              <td>
+                <%= link_to "show",user_path(user.id), class: "user_#{user.id}" %>
+              </td>
+              <td>
+ 				 <%= render 'relationships/follow_button', user: user %>
+               </td>
+            </tr>
+           </tbody>
+<% end %>
+</table>
+</div>
